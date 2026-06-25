@@ -31,4 +31,20 @@ A legegyszerűbb módszer, ha van feltelepítve Python:
 - `main.js`: Irányítja az audio lejátszást, az időzítéseket, a UI progress bart és a fejezetek közötti váltást.
 - `/audio/`: A fejezetekhez tartozó hangfájlok (`slide_X.mp3`, `cutscene_X.mp3`).
 - `/broll/`: Az aláfestő képek és vágóképek.
-- Gyökérkönyvtár képei: Speciális tematikus borítóképek a fejezetekhez.
+
+## 🛠 Technikai Architektúra
+
+Az alkalmazás egy teljesen egyedi építésű vanilla HTML/CSS/JS frontend, keretrendszerek nélkül, ami a maximális teljesítményre és a szinkronizált multimédia lejátszásra fókuszál.
+
+### Audio & Szinkronizáció
+- **Web Audio API:** A rendszer a `window.AudioContext`-et használja a háttérzenék és effektek procedurális generálásához (pl. szinuszgörbés akkordok, aluláteresztő szűrővel ellátott zaj alapú átvezető hangeffektek).
+- **Időzített Feliratok:** Az audio lejátszás (`timeupdate` esemény) szorosan össze van kötve a DOM manipulációval. A szöveg szavanként (`span` elemek) van feldolgozva, és a beszéd hanganyagának idejével arányosan vizuálisan kiemelve (`.aw` css class).
+
+### Vizuális Motor (Montage Engine)
+- **Virtual Camera Engine:** A `TIMED_MONTAGE_MAP` objektum pontos időbélyegek alapján irányítja, hogy mikor melyik B-Roll kép jelenjen meg az adott jelenetben, másodpercre pontosan a narrációhoz igazítva.
+- **Crossfade & Ken Burns:** Minden képváltásnál a rendszer két dedikált háttérréteget (`.bg-layer-1`, `.bg-layer-2`) használ a finom opacity-alapú áttűnésekhez (crossfade). A "Ken Burns" effekteket (dinamikus CSS háttérméretezés és pozicionálás) a `requestAnimationFrame` ciklus zökkenőmentesen hajtja végre.
+- **Adatvizualizáció:** Az interaktív grafikonok generálását a `Chart.js` végzi (a `buildArcChart`, `buildParamChart` stb. függvényeken keresztül).
+
+### Állapotkezelés (State Management)
+- Az alkalmazás egy központi `state` objektumban tartja nyilván az aktuális fejezetet (`cur`), a zene és hang állapotát, valamint a lejátszás státuszát.
+- A navigációt a `goTo(idx)` függvény irányítja, amely szinkronban kezeli a DOM tranzíciókat, elindítja az új fejezet audióját, frissíti az UI elemeket (Progress Bar, feliratok) és újragenerálja a procedurális zenét az adott fejezethez rendelt zenei akkordok (`CHAPTER_CHORDS`) alapján.- Gyökérkönyvtár képei: Speciális tematikus borítóképek a fejezetekhez.
