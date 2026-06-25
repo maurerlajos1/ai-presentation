@@ -2,8 +2,12 @@
 
 Ez a projekt egy interaktív, webes alapú, "dokumentumfilm" jellegű AI prezentáció. Látványos vizuális elemekkel, háttérzenévekkel, narrációs hanganyagokkal, valamint folyamatosan frissülő képernyőkkel (B-Roll és Chapter art) kíséri végig a nézőt az AI fejlődésének legfontosabb mérföldkövein.
 
-## 🚀 Futtatás helyben (Localhost)
+## 🚀 Élő Demó (Live Demo)
 
+A projekt elérhető és azonnal megtekinthető a weben a GitHub Pages jóvoltából:
+👉 **[https://maurerlajos1.github.io/ai-presentation/](https://maurerlajos1.github.io/ai-presentation/)**
+
+## 💻 Futtatás helyben (Localhost)
 Mivel a projekt külső médiafájlokat és scripteket használ (CORS miatt), a futtatáshoz szükség van egy lokális webszerverre.
 
 A legegyszerűbb módszer, ha van feltelepítve Python:
